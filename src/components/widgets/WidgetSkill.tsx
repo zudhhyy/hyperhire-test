@@ -9,18 +9,29 @@ interface WidgetSkillProps {
   skills: SkillsType[];
 }
 
-let width = 0;
-
-if (window !== undefined) {
-  width = window.innerWidth;
-}
-
-const paddingLeft = (width - 1024) / 4;
-
 const WidgetSkill: FC<WidgetSkillProps> = ({ skills }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [paddingLeft, setPaddingLeft] = useState(0);
 
   const infiniteSkills = [...skills, ...skills];
+
+  useEffect(() => {
+    // Only run on the client
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        const width = window.innerWidth;
+        setPaddingLeft((width - 1024) / 4);
+      };
+
+      // Initial calculation
+      handleResize();
+
+      // Update paddingLeft on resize
+      window.addEventListener('resize', handleResize);
+
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {

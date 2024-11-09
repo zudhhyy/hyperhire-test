@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Carousel } from 'react-responsive-3d-carousel';
 
@@ -15,13 +15,23 @@ interface WidgetCarouselProps {
   candidate: CandidateType[];
 }
 
-let width = 0;
-
-if (window !== undefined) {
-  width = window.innerWidth;
-}
-
 const WidgetCarousel: FC<WidgetCarouselProps> = ({ candidate }) => {
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    // Only run on the client side
+    if (typeof window !== 'undefined') {
+      const handleResize = () => setWidth(window.innerWidth);
+
+      // Initial width setting
+      handleResize();
+
+      // Adjust width on window resize
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
+
   return (
     <div className="animate-fadeIn flex flex-col items-center">
       <BubbleText className="animate-fadeIn bg-secondary-green" tailClassName="!left-0 right-0 mx-auto">
