@@ -1,101 +1,98 @@
-import Image from "next/image";
+import { FC } from 'react';
 
-export default function Home() {
+import Navbar from '@/components/navbar/Navbar';
+
+import Footer from '@/components/footer/Footer';
+import HeroHome from '@/components/hero/HeroHome';
+
+import { HomeData } from '@/types/home';
+
+import ProfileImage from '@/assets/images/profile.png';
+import FlagImage from '@/assets/images/flag.png';
+
+import DevIcon from '@/assets/icons/dev.png';
+import PersonIcon from '@/assets/icons/person.png';
+import KorIcon from '@/assets/icons/kor.png';
+import SettingIcon from '@/assets/icons/setting.png';
+
+import ChartIcon from '@/assets/icons/chart.png';
+import AlbumIcon from '@/assets/icons/album.png';
+import BoxIcon from '@/assets/icons/box.png';
+import TargetIcon from '@/assets/icons/target.png';
+import PhoneIcon from '@/assets/icons/phone.png';
+
+const fetchData = async (): Promise<HomeData> => {
+  const requirement = ['한국어 능력', '업무 수행 능력', '겸업 여부', '평판 조회'];
+
+  const candidate = Array.from({ length: 3 }).map((_) => ({
+    name: 'Abhishek Gupta',
+    position: '마케팅',
+    experience: '2y+',
+    skills: ['마케팅 콘텐츠 제작', '인스타그램 관리', '트위터 관리', '블로그 글 작성'],
+    picture: ProfileImage,
+    flag: FlagImage,
+  }));
+
+  const info = [
+    { text: '평균 월 120만원', detail: '임금을 해당 국가를 기준으로 계산합니다.' },
+    { text: '최대 3회 인력교체', detail: '막상 채용해보니 맞지 않아도 걱정하지 마세요.' },
+    { text: '평균 3일, 최대 10일', detail: '급하게 사람이 필요한 경우에도 빠른 채용이 가능합니다.' },
+  ];
+
+  const skills = [
+    { text: '해외 마케팅', image: ChartIcon },
+    { text: '퍼블리셔', image: AlbumIcon },
+    { text: '캐드원(제도사)', image: BoxIcon },
+    { text: '해외 세일즈', image: TargetIcon },
+    { text: '해외 CS', image: PhoneIcon },
+  ];
+
+  const companyDetail = [
+    { title: '상호명', name: '하이퍼하이어', details: 'Hyperhire India Private Limited' },
+    { title: '대표 CEO', name: '김주현', details: 'Juhyun Kim' },
+    { title: '사업자등록번호 CIN', name: '427-86-01187', details: 'U74110DL2016PTC290812' },
+    {
+      title: '주소 ADDRESS',
+      name: '서울특별시 강남대로 479, 지하 1층 238호',
+      details: 'D-138, Street number 11, Jagjeet Nagar, North East Delhi, New Delhi,',
+      subDetails: '110053 India',
+    },
+  ];
+
+  const footerMenu = [
+    { text: '해외 개발자 원격 채용', image: DevIcon },
+    { text: '외국인 원격 채용', subText: '(비개발)', image: PersonIcon },
+    { text: '한국어 가능 외국인 채용', image: KorIcon },
+    { text: '해외 개발자 활용 서비스', image: SettingIcon },
+  ];
+
+  const data = {
+    requirement,
+    candidate,
+    info,
+    skills,
+    companyDetail,
+    footerMenu,
+  };
+
+  // Simulate API request
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  return data;
+};
+
+const Home: FC = async () => {
+  const homeData = await fetchData();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div>
+      <div className="flex flex-col bg-hero bg-center pb-[60px] text-white lg:bg-[length:100%_100%] lg:pb-[108px]">
+        <Navbar />
+        <HeroHome homeData={homeData} />
+      </div>
+      <Footer companyDetail={homeData.companyDetail} footerMenu={homeData.footerMenu} />
     </div>
   );
-}
+};
+
+export default Home;
