@@ -9,7 +9,13 @@ interface WidgetSkillProps {
   skills: SkillsType[];
 }
 
-const paddingLeft = (window.innerWidth - 1024) / 4;
+let width = 0;
+
+if (window !== undefined) {
+  width = window.innerWidth;
+}
+
+const paddingLeft = (width - 1024) / 4;
 
 const WidgetSkill: FC<WidgetSkillProps> = ({ skills }) => {
   const [currentIndex, setCurrentIndex] = useState(0);

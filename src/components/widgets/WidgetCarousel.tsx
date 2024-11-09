@@ -15,7 +15,11 @@ interface WidgetCarouselProps {
   candidate: CandidateType[];
 }
 
-const width = window.innerWidth;
+let width = 0;
+
+if (window !== undefined) {
+  width = window.innerWidth;
+}
 
 const WidgetCarousel: FC<WidgetCarouselProps> = ({ candidate }) => {
   return (
